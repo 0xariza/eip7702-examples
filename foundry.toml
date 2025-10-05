@@ -1,0 +1,36 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+    "forge-std/=lib/forge-std/src/"
+]
+via_ir = true
+optimizer = true
+optimizer_runs = 200
+
+
+[profile.sepolia]
+src = "src"
+out = "out"
+libs = ["lib"]
+rpc_url = "https://rpc.sepolia.org"
+chain_id = 11155111
+gas_price = 20000000000  # 20 gwei
+gas_limit = 30000000
+via_ir = true
+optimizer = true
+optimizer_runs = 200
+
+[profile.mainnet]
+src = "src"
+out = "out"
+libs = ["lib"]
+rpc_url = "https://eth.llamarpc.com"
+chain_id = 1
+gas_price = 20000000000  # 20 gwei
+gas_limit = 30000000
+via_ir = true
+optimizer = true
+optimizer_runs = 200
