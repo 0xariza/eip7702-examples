@@ -1,4 +1,4 @@
-# Vaultera 7702 Delegator
+# Custom 7702 Delegator
 
 Permit-driven Fee Manager and Vaultera Smart Account designed for ERC-4337-style flows (and EIP-7702 client usage). Enables ETH and ERC20 transfers with configurable fees authorized via EIP-712 permits.
 
