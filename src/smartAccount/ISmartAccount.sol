@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-interface IVaulteraSmartAccount {
+interface ISmartAccount {
     // Errors
     error InsufficientBalance(uint256 required, uint256 available);
     error InvalidRecipient(address recipient);
     error TransferFailed(address recipient, uint256 amount);
     error UnauthorizedCaller();
-
-
 
     function transferETH(
         address to,

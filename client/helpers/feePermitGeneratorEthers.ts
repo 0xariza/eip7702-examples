@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 /**
- * Fee Permit Generator for VaulteraSmartAccount using ethers.js
+ * Fee Permit Generator for SmartAccount using ethers.js
  * This module handles the generation of EIP-712 fee permits for backend authorization
  */
 

@@ -2,7 +2,7 @@ import { keccak256, toHex } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 
 /**
- * Fee Permit Generator for VaulteraSmartAccount
+ * Fee Permit Generator for SmartAccount
  * This module handles the generation of EIP-712 fee permits for backend authorization
  */
 

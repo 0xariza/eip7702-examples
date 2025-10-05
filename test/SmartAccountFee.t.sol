@@ -4,7 +4,7 @@ pragma solidity ^0.8.28;
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
-import {VaulteraSmartAccount} from "src/vaulteraSmartAccount/VaulteraSmartAccount.sol";
+import {SmartAccount} from "src/smartAccount/SmartAccount.sol";
 import {FeeManager} from "src/feeManager/FeeManager.sol";
 import {IFeeManager} from "src/feeManager/IFeeManager.sol";
 
@@ -62,11 +62,11 @@ contract MockERC20 {
     }
 }
 
-contract VaulteraSmartAccountFeeTest is Test {
+contract SmartAccountFeeTest is Test {
     address internal constant ENTRYPOINT = 0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108;
 
     FeeManager feeManager;
-    VaulteraSmartAccount account;
+    SmartAccount account;
     address treasury;
     address feeSigner;
     uint256 constant FEE_SIGNER_PK = 0xFEE;
@@ -88,7 +88,7 @@ contract VaulteraSmartAccountFeeTest is Test {
         );
 
         // Deploy account pointing to feeManager and entrypoint
-        account = new VaulteraSmartAccount(address(feeManager), ENTRYPOINT);
+        account = new SmartAccount(address(feeManager), ENTRYPOINT);
 
         // Fund account with ETH
         vm.deal(address(account), 100 ether);

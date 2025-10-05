@@ -10,11 +10,11 @@ import { recipient1, recipient2 } from "../consts";
 dotenv.config();
 
 // Contract addresses
-const VAULTERA_SMART_ACCOUNT = "0xDB2Dc9d1076b5560B9a160145613cbd0CD0550C4" as const;
+const SMART_ACCOUNT = "0xDB2Dc9d1076b5560B9a160145613cbd0CD0550C4" as const;
 const FEE_MANAGER = "0xF77f34d881883054aa0478Ae71F91273f8D997B7" as const;
 
-// VaulteraSmartAccount ABI - only the functions we need
-const vaulteraSmartAccountAbi = [
+// SmartAccount ABI - only the functions we need
+const smartAccountAbi = [
   {
     inputs: [
       { internalType: "address", name: "to", type: "address" },
@@ -99,16 +99,16 @@ export async function transferETHWithPermit() {
   });
 
   // Create 7702 smart account
-  const vaulteraAccount = await make7702SimpleSmartAccount({
+  const smartAccount = await make7702SimpleSmartAccount({
     client,
     owner: eoa7702,
-    accountLogicAddress: VAULTERA_SMART_ACCOUNT,
+    accountLogicAddress: SMART_ACCOUNT,
   });
 
   const smartAccountClient = createSmartAccountClient({
     client,
     chain: sepolia,
-    account: vaulteraAccount,
+    account: smartAccount,
     bundlerTransport: http(
       `https://api.pimlico.io/v2/11155111/rpc?apikey=${process.env.PIMLICO_API_KEY}`
     ),
@@ -116,11 +116,11 @@ export async function transferETHWithPermit() {
 
   // Check current balance
   const accountBalance = await client.getBalance({
-    address: vaulteraAccount.address
+    address: smartAccount.address
   });
 
-  console.log("=== VaulteraSmartAccount Transfer with Permit ===");
-  console.log(`Account Address: ${vaulteraAccount.address}`);
+  console.log("=== SmartAccount Transfer with Permit ===");
+  console.log(`Account Address: ${smartAccount.address}`);
   console.log(`Current Balance: ${formatEther(accountBalance)} ETH`);
   console.log(`Fee Signer Address: ${feeSigner.address}`);
 
@@ -169,8 +169,8 @@ export async function transferETHWithPermit() {
   let domainSeparator: `0x${string}`;
   try {
     domainSeparator = await client.readContract({
-      address: VAULTERA_SMART_ACCOUNT,
-      abi: vaulteraSmartAccountAbi,
+      address: SMART_ACCOUNT,
+      abi: smartAccountAbi,
       functionName: "getDomainSeparator"
     }) as `0x${string}`;
     console.log(`Domain Separator: ${domainSeparator}`);
@@ -220,10 +220,10 @@ export async function transferETHWithPermit() {
 
     // For EIP-7702, call the function directly on the account (not through calls array)
     const transactionHash = await smartAccountClient.sendTransaction({
-      to: vaulteraAccount.address, // Call on the account itself since it now has the contract code
+      to: smartAccount.address, // Call on the account itself since it now has the contract code
       value: 0n,
       data: encodeFunctionData({
-        abi: vaulteraSmartAccountAbi,
+        abi: smartAccountAbi,
         functionName: 'transferETH',
         args: [
           recipient1 as `0x${string}`,
@@ -235,7 +235,7 @@ export async function transferETHWithPermit() {
         ]
       }),
       authorization: await eoa7702.signAuthorization({
-        address: VAULTERA_SMART_ACCOUNT,
+        address: SMART_ACCOUNT,
         chainId: sepolia.id,
         nonce: await client.getTransactionCount({
           address: eoa7702.address,

@@ -12,13 +12,13 @@ import "../../account-abstraction/contracts/core/BaseAccount.sol";
 import "../feeManager/IFeeManager.sol";
 
 /**
- * @title VaulteraSmartAccount
+ * @title SmartAccount
  * @notice Modular smart account compatible with ERC-4337 (Account Abstraction).
  * @dev Supports secure execution, signature validation, and fee management via an external
  *      IFeeManager contract. Enables interaction with ERC20, ERC721, and ERC1155 tokens and
  *      integrates with the EntryPoint.
  */
-contract VaulteraSmartAccount is
+contract SmartAccount is
     BaseAccount,
     IERC165,
     IERC1271,
@@ -183,3 +183,5 @@ contract VaulteraSmartAccount is
 
     receive() external payable {}
 }
+
+
